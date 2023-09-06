@@ -2,11 +2,11 @@
 
 #### Members:
 
-* Freyja Richardson (Backend Developer)
-* Christian Mertz   (Backend Developer)
-* (Backend Developer)
-* Andrew Chayavon   (Front-End Developer)
-* Kennedy Bowles    (Front-End Developer)
+* Freyja Richardson   (Backend Developer)
+* Christian Mertz     (Backend Developer)
+* Kevin Kongmanychanh (Backend Developer)
+* Andrew Chayavon     (Front-End Developer)
+* Kennedy Bowles      (Front-End Developer)
 
 
 #### Description
