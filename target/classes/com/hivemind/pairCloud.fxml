@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #301934;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hivemind.controllers.CloudPairController">
+    <children>
+        <Label layoutX="192.0" layoutY="175.0" />
+        <Button fx:id="pair_submit" layoutX="262.0" layoutY="343.0" onAction="#pairSubmit" prefHeight="25.0" prefWidth="87.0" text="Pair" />
+        <TextField fx:id="parent" layoutX="217.0" layoutY="102.0" prefHeight="25.0" prefWidth="166.0" promptText="Directory to sync?" />
+        <TextField fx:id="child" layoutX="217.0" layoutY="137.0" prefHeight="25.0" prefWidth="166.0" promptText="Directory to save to?" />
+        <TextField fx:id="ip" layoutX="216.0" layoutY="172.0" prefHeight="25.0" prefWidth="166.0" promptText="IP address?" />
+        <TextField fx:id="port" layoutX="216.0" layoutY="208.0" prefHeight="25.0" prefWidth="166.0" promptText="Port?" />
+        <TextField fx:id="timer" layoutX="217.0" layoutY="243.0" prefHeight="25.0" prefWidth="166.0" promptText="Time between sync checks?" />
+        <CheckBox fx:id="status" layoutX="267.0" layoutY="281.0" mnemonicParsing="false" text="Is parent?" textFill="WHITE" />
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="12.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../hivemindTemp.png" />
+            </image>
+        </ImageView>
+        <Text fill="WHITE" fontSmoothingType="LCD" layoutX="186.0" layoutY="81.0" stroke="WHITE" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pair Cloud" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="39.0" />
+            </font>
+        </Text>
+        <Button fx:id="cancel" layoutX="76.0" layoutY="343.0" onAction="#handleButtonClick" prefHeight="25.0" prefWidth="87.0" text="Cancel" />
+        <MenuButton alignment="CENTER_RIGHT" layoutX="461.0" layoutY="343.0" mnemonicParsing="false" text="Menu">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+            </items>
+        </MenuButton>
+    </children>
+</Pane>

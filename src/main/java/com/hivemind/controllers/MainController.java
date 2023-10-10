@@ -4,10 +4,12 @@ import com.hivemind.Main;
 import com.hivemind.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+
 
 import java.io.IOException;
 
@@ -17,8 +19,15 @@ public class MainController {
     @FXML
     Button pair_pc;
 
+    @FXML
+    Button pair_cloud;
+    
+    @FXML
+    Pane pane;
+
+    @FXML
     protected void initialize() {
-        // TODO document why this method is empty
+
     }
 
     @FXML
@@ -30,7 +39,8 @@ public class MainController {
         if (clickedButton == pair_pc) {
             sceneController.setView(stage, "pair.fxml");
         }
-
+        if (clickedButton == pair_cloud) {
+            sceneController.setView(stage, "pairCloud.fxml");
+        }
     }
-
 }
