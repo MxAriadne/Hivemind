@@ -1,6 +1,6 @@
 package com.hivemind.controllers;
 
-import com.hivemind.Main;
+import com.hivemind.DatabaseConn;
 import com.hivemind.SceneController;
 import com.hivemind.SocketConn;
 import javafx.event.ActionEvent;
@@ -8,14 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.sql.SQLException;
 
 public class PairController {
 
@@ -32,6 +30,8 @@ public class PairController {
     protected void initialize() {
 
     }
+
+
     @FXML
     private void handleButtonClick(ActionEvent e) throws IOException {
         Stage stage = (Stage) ((Node) e.getTarget()).getScene().getWindow();
@@ -42,11 +42,18 @@ public class PairController {
             sceneController.setView(stage, "main.fxml");
         }
     }
-    public void pairSubmit() throws IOException {
-        SocketConn conn = new SocketConn(parent.getText(), child.getText(), InetAddress.getByName(ip.getText()), InetAddress.getByName(ip.getText()), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
 
-        File file = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\README.md");
-        conn.sendFile(file);
+    public void pairSubmit() throws IOException, SQLException {
+
+        // TEMP STUFF
+        SocketConn conn = new SocketConn(parent.getText(), child.getText(), InetAddress.getByName(ip.getText()), InetAddress.getByName(ip.getText()), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
+        DatabaseConn db = new DatabaseConn();
+
+        db.saveNewSocket(parent.getText(), child.getText(), ip.getText(), ip.getText(), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
+        db.loadExistingSocket();
+
+        //File file = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\README.md");
+        //conn.sendFile(file);
 
     }
 

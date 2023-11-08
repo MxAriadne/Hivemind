@@ -8,8 +8,10 @@ import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 
-
-import java.io.IOException;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main extends Application {
 
@@ -38,7 +40,39 @@ public class Main extends Application {
         timeline.play();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //todo: this is temporary to test connection def needs removed/replaced for final
+        InetAddress serverAddress = InetAddress.getLocalHost();
+        int serverPort = 9001;
+        ServerSocket serverSocket = new ServerSocket(serverPort, Integer.MAX_VALUE, serverAddress);
+
+        Thread incoming = new Thread(() -> {
+            DatabaseConn db = new DatabaseConn();
+
+            while (true) {
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    InputStream in = clientSocket.getInputStream();
+                    OutputStream out = clientSocket.getOutputStream();
+
+                    File receivedFile = new File("C:\\");
+                    FileOutputStream fileOutputStream = new FileOutputStream(receivedFile);
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+
+                    while ((bytesRead = in.read(buffer)) != -1) {
+                        fileOutputStream.write(buffer, 0, bytesRead);
+                    }
+
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        incoming.start();
+
         launch();
     }
 }

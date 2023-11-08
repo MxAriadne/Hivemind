@@ -13,7 +13,7 @@ import java.net.Socket;
 *  linkDest()   - This sets the child for the file directory.
 *  linkSource() - This sets the parent for the file directory.
 *  createConn() - Validates connection, also sets object to conn.
-*
+*  load() - this might be a protected name so may need renamed. this would init the while loop to check for socket.accept()
 *
 */
 public class SocketConn {
@@ -36,6 +36,11 @@ public class SocketConn {
     //Amount of time between directory checks
     int timer;
 
+    //Console themeing for easy diag
+    public static final String SUCCESS = "\033[1;92m" + "SUCCESS: " + "\033[1;90m";
+    public static final String FAILURE = "\033[1;91m" + "FAILURE: " + "\033[1;90m";
+
+
     public SocketConn(String parentDir, String childDir, InetAddress childIP, InetAddress parentIP, int socketPort, boolean status, int timer) {
         this.parentDir = parentDir;
         this.childDir = childDir;
@@ -44,6 +49,7 @@ public class SocketConn {
         this.socketPort = socketPort;
         this.status = status;
         this.timer = timer;
+        this.load();
     }
 
     //Todo
@@ -53,19 +59,41 @@ public class SocketConn {
     // valid.
     public boolean createConn() {
         try {
+            // checks for parent or child conn...
             if (status) {
-                serverSocket = new ServerSocket(socketPort, 50, parentIP);
+                // connect to parent
+                serverSocket = new ServerSocket(socketPort, Integer.MAX_VALUE, parentIP);
             } else {
+                // else connect to child
                 serverSocket = new ServerSocket(socketPort, 50, childIP);
             }
             if (serverSocket.isBound()) {
-                System.out.println("Connection is valid!");
+                System.out.println(SUCCESS + "Connected to the server.");
                 return true;
             }
         } catch (IOException e) {
-            throw new RuntimeException("IP and/or port are not valid!!!");
+            System.out.println(FAILURE + e);
         }
         return false;
+    }
+
+    public void load() {
+        System.out.println(SUCCESS + "Loading!");
+        if (this.createConn()) {
+            Thread incoming = new Thread(() -> {
+                while (true) {
+                    System.out.println(SUCCESS);
+                    try {
+                        Socket test = this.serverSocket.accept();
+                        System.out.println(SUCCESS + test.getInetAddress());
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            incoming.start();
+        }
     }
 
     //adds the ability to change post creation
@@ -114,7 +142,7 @@ public class SocketConn {
             //File transfer done. Close the socket connection!
             socket.close();
             serverSocket.close();
-            System.out.println("File sent succesfully!");
+            System.out.println(SUCCESS + "File sent!");
         }
     }
 

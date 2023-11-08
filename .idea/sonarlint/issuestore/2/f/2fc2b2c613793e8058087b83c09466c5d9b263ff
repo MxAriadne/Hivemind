@@ -1,10 +1,0 @@
-
-b	java:S112B"FDefine and throw a dedicated exception instead of using a generic one.(ûŞÑ÷8¶åø±1
-n
-java:S2095Y"QUse try-with-resources or close this "BufferedInputStream" in a "finally" clause.(€š†Á8Óåø±1
-u
-java:S2095"RUse try-with-resources or close this "BufferedOutputStream" in a "finally" clause.(£ğóÙûÿÿÿÿ8Óåø±1
-O
-java:S1135"2Complete the task associated to this TODO comment.(¤éœï8×åø±1
-T
-java:S11351"2Complete the task associated to this TODO comment.(æ§¥£ùÿÿÿÿ8Øåø±1
