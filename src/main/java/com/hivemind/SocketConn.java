@@ -108,10 +108,26 @@ public class SocketConn {
         parentDir = dir;
     }
 
-    public void sendFile(File file) throws IOException {
+    public void sendFile() throws IOException {
 
         if (createConn()) {
-            Socket socket = serverSocket.accept();
+            Socket serverSocket = new Socket(this.parentIP, this.socketPort);
+            InputStream in = serverSocket.getInputStream();
+            OutputStream out = serverSocket.getOutputStream();
+
+            File fileToSend = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\src\\main\\resources\\com\\hivemind\\main.fxml");
+            FileInputStream fileInputStream = new FileInputStream(fileToSend);
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+
+            fileInputStream.close();
+            serverSocket.close();
+
+            /*Socket socket = serverSocket.accept();
             FileInputStream fis = new FileInputStream(file);
 
             BufferedInputStream bis = new BufferedInputStream(fis);
@@ -141,7 +157,7 @@ public class SocketConn {
 
             //File transfer done. Close the socket connection!
             socket.close();
-            serverSocket.close();
+            serverSocket.close();*/
             System.out.println(SUCCESS + "File sent!");
         }
     }

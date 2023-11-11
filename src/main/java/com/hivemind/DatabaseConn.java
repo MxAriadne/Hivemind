@@ -59,11 +59,12 @@ public class DatabaseConn {
 		String databaseURL = "jdbc:sqlite:structure.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
+
+		// query to run
 		String query = String.format("INSERT INTO connection(parentDir, childDir, childIP, parentIP, socketPort, status, timer) VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\");", parentDir, childDir, childIP, parentIP, socketPort, status, timer);
 
-		System.out.println(query);
-
 		try {
+			//returns the outcome
 			return statement.execute(query);
 		} catch (Exception e) {
 			System.out.println(FAILURE + e);
@@ -73,7 +74,7 @@ public class DatabaseConn {
 	}
 
 	// pulls socket info and loads into memory
-	public void loadExistingSocket() throws SQLException {
+	public ResultSetMetaData loadExistingSockets() throws SQLException {
 
 		// attempts db connection
 		// not wrapping in a try/catch because the program would not run if this connection was not valid
@@ -81,33 +82,37 @@ public class DatabaseConn {
 		String databaseURL = "jdbc:sqlite:structure.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
-		//String query = String.format("INSERT INTO connection VALUES (%s, %s, %s, %s, %s, %s, %s);", parentDir, childDir, childIP, parentIP, socketPort, status, timer);
+
+		// Select everything
 		String query = "SELECT * FROM connection";
 
+		// This returns a ResultSetMetaData object that contains all the records
+		return statement.executeQuery(query).getMetaData();
+
+	}
+
+	// update socketconn
+	public boolean updateSocket(String variable, String value, int id) throws SQLException {
+		// attempts db connection
+		// not wrapping in a try/catch because the program would not run if this connection was not valid
+		// so we can only get to this point when the db is valid
+		String databaseURL = "jdbc:sqlite:structure.db";
+		Connection connection = DriverManager.getConnection(databaseURL, "", "");
+		Statement statement = connection.createStatement();
+
+		// query to run
+		String query = String.format("UPDATE connection SET \"%s\" = \"%s\" WHERE id EQUALS \"%s\";", variable, value, id);
+
 		try {
-			ResultSet test = statement.executeQuery(query);
-			ResultSetMetaData rsmd = test.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
-			while (test.next()) {
-				for (int i = 1; i <= columnsNumber; i++) {
-					if (i > 1) System.out.print(",  ");
-					String columnValue = test.getString(i);
-					System.out.print(columnValue + " " + rsmd.getColumnName(i));
-				}
-				System.out.println("");
-			}
+			//returns the outcome
+			return statement.execute(query);
 		} catch (Exception e) {
 			System.out.println(FAILURE + e);
+			return false;
 		}
-
 	}
 
-	/*// update socketconn
-	public boolean updateSocket() {
-
-	}
-
-	// update watchservice
+	/*// update watchservice
 	// this needs to save
 	public boolean updateWatch() {
 

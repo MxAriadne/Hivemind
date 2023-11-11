@@ -31,7 +31,6 @@ public class PairController {
 
     }
 
-
     @FXML
     private void handleButtonClick(ActionEvent e) throws IOException {
         Stage stage = (Stage) ((Node) e.getTarget()).getScene().getWindow();
@@ -50,7 +49,7 @@ public class PairController {
         DatabaseConn db = new DatabaseConn();
 
         db.saveNewSocket(parent.getText(), child.getText(), ip.getText(), ip.getText(), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
-        db.loadExistingSocket();
+        db.loadExistingSockets();
 
         //File file = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\README.md");
         //conn.sendFile(file);

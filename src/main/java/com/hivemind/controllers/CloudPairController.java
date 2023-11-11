@@ -44,7 +44,7 @@ public class CloudPairController {
         SocketConn conn = new SocketConn(parent.getText(), child.getText(), InetAddress.getByName(ip.getText()), InetAddress.getByName(ip.getText()), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
 
         File file = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\README.md");
-        conn.sendFile(file);
+        //conn.sendFile(file);
 
     }
 
