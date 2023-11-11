@@ -112,6 +112,7 @@ public class SocketConn {
 
         if (createConn()) {
             Socket serverSocket = new Socket(this.parentIP, this.socketPort);
+            System.out.println("fufu" + serverSocket.isBound());
             InputStream in = serverSocket.getInputStream();
             OutputStream out = serverSocket.getOutputStream();
 

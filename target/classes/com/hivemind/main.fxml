@@ -15,9 +15,9 @@
          </image>
       </ImageView>
       <Button fx:id="pair_cloud" layoutX="244.0" layoutY="220.0" onAction="#handleButtonClick" text="Pair Cloud Service" />
-      <Button layoutX="274.0" layoutY="318.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="test1" onAction="#handleButtonClick" layoutX="274.0" layoutY="318.0" mnemonicParsing="false" text="test1" />
       <Button fx:id="pair_pc" layoutX="256.0" layoutY="171.0" onAction="#handleButtonClick" prefWidth="88.0" text="Pair Local PC" />
-      <Button layoutX="274.0" layoutY="269.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="test2" layoutX="274.0" layoutY="269.0" mnemonicParsing="false" text="test2" />
       <Text layoutX="259.0" layoutY="148.0" stroke="#dfbb0a" strokeLineJoin="ROUND" strokeType="OUTSIDE" text="HiveMind" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />

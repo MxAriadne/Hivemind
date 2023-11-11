@@ -18,6 +18,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
+import static com.hivemind.DatabaseConn.FAILURE;
+
 //TODO
 public class MainController {
 
@@ -49,13 +51,13 @@ public class MainController {
             InetAddress serverAddress = InetAddress.getLocalHost();
             int serverPort = 9001;
             //ServerSocket serverSocket = new ServerSocket(serverPort, Integer.MAX_VALUE, serverAddress);
-            SocketConn serverSocket = new SocketConn("C:\\", "C:\\", InetAddress.getLocalHost(), InetAddress.getLocalHost(), 80, true, Integer.MAX_VALUE);
+            SocketConn serverSocket = new SocketConn("C:\\", "C:\\", InetAddress.getByName("192.168.68.103"), InetAddress.getByName("192.168.68.123"), 9809, true, Integer.MAX_VALUE);
 
             Thread incoming = new Thread(() -> {
                 try {
                     serverSocket.sendFile();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    System.out.println(FAILURE + e);
                 }
             });
             incoming.start();
