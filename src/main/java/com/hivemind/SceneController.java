@@ -17,6 +17,9 @@ public class SceneController {
         content = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(s)));
         scene = new Scene(content);
         stage.setScene(scene);
+        stage.setTitle("Hivemind");
+        stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 

@@ -2,7 +2,6 @@ module com.hivemind {
     requires javafx.controls;
     requires javafx.fxml;
 	requires java.sql;
-	requires org.xerial.sqlitejdbc;
 
 	exports com.hivemind;
     opens com.hivemind to javafx.fxml;

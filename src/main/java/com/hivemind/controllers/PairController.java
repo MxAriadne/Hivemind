@@ -2,7 +2,6 @@ package com.hivemind.controllers;
 
 import com.hivemind.DatabaseConn;
 import com.hivemind.SceneController;
-import com.hivemind.SocketConn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,16 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.sql.SQLException;
 
 public class PairController {
 
     @FXML
-    TextField parent, child, ip, port, timer;
-
-    @FXML
-    CheckBox status;
+    TextField dir, clientIP, port, timer;
 
     @FXML
     Button cancel;
@@ -42,18 +37,11 @@ public class PairController {
         }
     }
 
-    public void pairSubmit() throws IOException, SQLException {
-
-        // TEMP STUFF
-        SocketConn conn = new SocketConn(parent.getText(), child.getText(), InetAddress.getByName(ip.getText()), InetAddress.getByName(ip.getText()), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
+    public void pairSubmit() throws SQLException {
         DatabaseConn db = new DatabaseConn();
-
-        db.saveNewSocket(parent.getText(), child.getText(), ip.getText(), ip.getText(), Integer.parseInt(port.getText()), status.selectedProperty().get(), Integer.parseInt(timer.getText()));
-        db.loadExistingSockets();
-
-        //File file = new File("C:\\Users\\gage1\\Documents\\GitHub\\JAVA3033-Hivemind\\README.md");
-        //conn.sendFile(file);
-
+        db.saveNewSocket(dir.getText(), clientIP.getText(), Integer.parseInt(port.getText()), Integer.parseInt(timer.getText()));
+        com.hivemind.Main.loadSockets();
+        System.out.println("Paired!");
     }
 
 }

@@ -1,11 +1,12 @@
 package com.hivemind.controllers;
 
-import javafx.fxml.FXML;
-import javafx.util.Duration;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class OpenScreenController {
     @FXML
@@ -18,7 +19,7 @@ public class OpenScreenController {
     Text welcome; //was the welcome text now file sync
 
     @FXML
-    protected void initialize() {
+    protected void initialize()  {
         welcome.setVisible(false);  //not visible
         hiveMindLogo.setVisible(false); //not visible
         // Slide the logo to the left over 1.7 seconds

@@ -9,38 +9,40 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #301934;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hivemind.controllers.OpenScreenController">
-   <children>
-      <Text fx:id="hiveMindLogo" layoutX="217.0" layoutY="243.0" opacity="1" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="5.4" text="HiveMind" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="80.0" />
-         </font>
-         <stroke>
-            <LinearGradient endX="0.40530301404721814" endY="1.0" startX="0.4015151524182522" startY="0.1174242749358669">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.888089656829834" green="0.9157894849777222" blue="0.08479531854391098" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="1.0" green="0.4911167323589325" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </stroke>
-      </Text>
-      <Text fx:id="welcome" fill="WHITE" fontSmoothingType="LCD" layoutX="401.0" layoutY="284.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="File Sync" textAlignment="CENTER" wrappingWidth="138.37615966796875">
-         <font>
-            <Font name="System Italic" size="30.0" />
-         </font>
-      </Text>
-      <ImageView fx:id="logo" fitHeight="231.0" fitWidth="262.0" layoutX="185.0" layoutY="85.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../hivemindTemp.png" />
-         </image>
-      </ImageView>
-   </children>
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #301934;" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hivemind.controllers.OpenScreenController">
+   <Text fx:id="hiveMindLogo" layoutX="217.0" layoutY="243.0" strokeLineJoin="ROUND" strokeType="OUTSIDE"
+         strokeWidth="5.4" text="HiveMind" textAlignment="CENTER">
+      <font>
+         <Font name="System Bold" size="80.0"/>
+      </font>
+      <stroke>
+         <LinearGradient endX="0.40530301404721814" startX="0.4015151524182522" startY="0.1174242749358669">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="0.888089656829834" green="0.9157894849777222" blue="0.08479531854391098"/>
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="1.0" green="0.4911167323589325"/>
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </stroke>
+   </Text>
+   <Text fx:id="welcome" fill="WHITE" fontSmoothingType="LCD" layoutX="401.0" layoutY="284.0" stroke="BLACK"
+         strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="File Sync" textAlignment="CENTER"
+         wrappingWidth="138.37615966796875">
+      <font>
+         <Font name="System Italic" size="30.0"/>
+      </font>
+   </Text>
+   <ImageView fx:id="logo" fitHeight="231.0" fitWidth="262.0" layoutX="185.0" layoutY="85.0"
+              nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <Image url="@hivemindTemp.png"/>
+   </ImageView>
 </Pane>

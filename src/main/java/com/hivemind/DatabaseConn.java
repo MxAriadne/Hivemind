@@ -18,7 +18,7 @@ public class DatabaseConn {
 
 		try {
 			// attempts db connection
-			String databaseURL = "jdbc:sqlite:structure.db";
+			String databaseURL = "jdbc:sqlite:test.db";
 			connection = DriverManager.getConnection(databaseURL, "", "");
 
 			// if conn is valid, print
@@ -51,17 +51,17 @@ public class DatabaseConn {
 		}
 	}
 
-	public boolean saveNewSocket(String parentDir, String childDir, String childIP, String parentIP, int socketPort, boolean status, int timer) throws SQLException {
+	public boolean saveNewSocket(String dir, String clientIP, int socketPort, int timer) throws SQLException {
 
 		// attempts db connection
 		// not wrapping in a try/catch because the program would not run if this connection was not valid
 		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:structure.db";
+		String databaseURL = "jdbc:sqlite:test.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 
 		// query to run
-		String query = String.format("INSERT INTO connection(parentDir, childDir, childIP, parentIP, socketPort, status, timer) VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\");", parentDir, childDir, childIP, parentIP, socketPort, status, timer);
+		String query = String.format("INSERT INTO connection(dir, clientIP, socketPort, timer) VALUES (\"%s\",\"%s\",\"%s\",\"%s\");", dir, clientIP, socketPort, timer);
 
 		try {
 			//returns the outcome
@@ -74,12 +74,12 @@ public class DatabaseConn {
 	}
 
 	// pulls socket info and loads into memory
-	public ResultSetMetaData loadExistingSockets() throws SQLException {
+	public ResultSet loadExistingSockets() throws SQLException {
 
 		// attempts db connection
 		// not wrapping in a try/catch because the program would not run if this connection was not valid
 		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:structure.db";
+		String databaseURL = "jdbc:sqlite:test.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 
@@ -87,7 +87,7 @@ public class DatabaseConn {
 		String query = "SELECT * FROM connection";
 
 		// This returns a ResultSetMetaData object that contains all the records
-		return statement.executeQuery(query).getMetaData();
+		return statement.executeQuery(query);
 
 	}
 
@@ -96,7 +96,7 @@ public class DatabaseConn {
 		// attempts db connection
 		// not wrapping in a try/catch because the program would not run if this connection was not valid
 		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:structure.db";
+		String databaseURL = "jdbc:sqlite:test.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 

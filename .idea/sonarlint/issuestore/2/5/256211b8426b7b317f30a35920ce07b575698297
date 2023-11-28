@@ -1,0 +1,32 @@
+
+v
+java:S1192"TDefine a constant instead of duplicating this literal "jdbc:sqlite:test.db" 4 times.(ÿτ―½ÿÿÿÿÿ8μέΑ1
+j
+java:S2095S"HUse try-with-resources or close this "Connection" in a "finally" clause.( »έαώÿÿÿÿ8ίƒχΑ1
+i
+java:S2095e"GUse try-with-resources or close this "Statement" in a "finally" clause.(ι°Αµώÿÿÿÿ8ίƒχΑ1
+i
+java:S2095T"GUse try-with-resources or close this "Statement" in a "finally" clause.(ι°Αµώÿÿÿÿ8ήƒχΑ1
+i
+java:S2095="GUse try-with-resources or close this "Statement" in a "finally" clause.(ι°Αµώÿÿÿÿ8ίƒχΑ1
+j
+java:S2095d"HUse try-with-resources or close this "Connection" in a "finally" clause.( »έαώÿÿÿÿ8ίƒχΑ1
+j
+java:S2095"HUse try-with-resources or close this "Connection" in a "finally" clause.(χ†θωÿÿÿÿ8ήƒχΑ1
+d
+java:S2095!"HUse try-with-resources or close this "Connection" in a "finally" clause.(ϋΣτ8ίƒχΑ1
+j
+java:S2095<"HUse try-with-resources or close this "Connection" in a "finally" clause.( »έαώÿÿÿÿ8ήƒχΑ1
+i
+java:S2095""GUse try-with-resources or close this "Statement" in a "finally" clause.(‡²€·ύÿÿÿÿ8ήƒχΑ1
+K
+java:S2115")Add password protection to this database.(χ†θωÿÿÿÿ8γƒχΑ1
+L
+java:S2093"*Change this "try" to a try-with-resources.(΅»Άόωÿÿÿÿ8εƒχΑ1
+K
+java:S2115<")Add password protection to this database.( »έαώÿÿÿÿ8ζƒχΑ1
+K
+java:S2115S")Add password protection to this database.( »έαώÿÿÿÿ8θƒχΑ1
+K
+java:S2115d")Add password protection to this database.( »έαώÿÿÿÿ8ιƒχΑ1
+X	java:S125u"<This block of commented-out lines of code should be removed.(ο½τ8κƒχΑ1

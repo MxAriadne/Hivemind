@@ -1,38 +1,19 @@
 package com.hivemind.controllers;
 
-import com.hivemind.Main;
 import com.hivemind.SceneController;
-import com.hivemind.SocketConn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-
-import static com.hivemind.DatabaseConn.FAILURE;
 
 //TODO
 public class MainController {
 
     @FXML
-    Button pair_pc, pair_cloud, test1, test2;
-    
-    @FXML
-    Pane pane;
-
-    @FXML
-    protected void initialize() {
-
-    }
+    Button pair_pc, hide_window;
 
     @FXML
     private void handleButtonClick(ActionEvent e) throws IOException {
@@ -42,29 +23,8 @@ public class MainController {
 
         if (clickedButton == pair_pc) {
             sceneController.setView(stage, "pair.fxml");
-        }
-        if (clickedButton == pair_cloud) {
-            sceneController.setView(stage, "pairCloud.fxml");
-        }
-        if (clickedButton == test1) {
-            //todo: this is temporary to test connection def needs removed/replaced for final
-            InetAddress serverAddress = InetAddress.getLocalHost();
-            int serverPort = 9001;
-            //ServerSocket serverSocket = new ServerSocket(serverPort, Integer.MAX_VALUE, serverAddress);
-            SocketConn serverSocket = new SocketConn("C:\\", "C:\\", InetAddress.getByName("192.168.68.103"), InetAddress.getByName("192.168.68.123"), 9809, true, Integer.MAX_VALUE);
-
-            Thread incoming = new Thread(() -> {
-                try {
-                    serverSocket.sendFile();
-                } catch (IOException ex) {
-                    System.out.println(FAILURE + e);
-                }
-            });
-            incoming.start();
-
-        }
-        if (clickedButton == test2) {
-
+        } else if (clickedButton == hide_window) {
+            stage.setIconified(true);
         }
     }
 }
