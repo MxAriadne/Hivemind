@@ -1,17 +1,5 @@
 
-O
-java:S1135"2Complete the task associated to this TODO comment.(¤éœï8ÊæÌšÁ1
-]	java:S125?"<This block of commented-out lines of code should be removed.(Å¨Î…øÿÿÿÿ8ÎæÌšÁ1
-]	java:S125c"<This block of commented-out lines of code should be removed.(¸¿¯—üÿÿÿÿ8àŠŞšÁ1
-o
-java:S3776f"RRefactor this method to reduce its Cognitive Complexity from 43 to the 15 allowed.(ä•ªÚ8ÒæÌšÁ1
+p
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 43 to the 15 allowed.(‡¬’›8®ŒæÄÁ1
 
-java:S2142¦"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(üÍ”ûÿÿÿÿ8ÓæÌšÁ1
-f
-java:S1128"DRemove this unused import 'com.hivemind.controllers.MainController'.(ªùâîùÿÿÿÿ8ÕÔšÁ1
-W
-java:S1128";Remove this unused import 'javafx.application.Application'.(í™şj8ÕÔšÁ1
-R
-java:S1128"5Remove this unused import 'javafx.scene.paint.Color'.(Ïî£à8ÕÔšÁ1
-J
-java:S1068 "(Remove this unused "port" private field.(ß³†ÿÿÿÿÿ8ÜæÌšÁ1
+java:S2142Õ"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(üÍ”ûÿÿÿÿ8¯ŒæÄÁ1

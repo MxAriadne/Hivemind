@@ -43,6 +43,6 @@
    </Text>
    <ImageView fx:id="logo" fitHeight="231.0" fitWidth="262.0" layoutX="185.0" layoutY="85.0"
               nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-      <Image url="@hivemindTemp.png"/>
+      <Image url="@hivemind.png"/>
    </ImageView>
 </Pane>

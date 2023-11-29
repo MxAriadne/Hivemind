@@ -1,3 +1,19 @@
+/*
+ * Group 2
+ * Kevin Kongmanychanh
+ * Andrew Chayavon
+ * Kennedy Bowles
+ * Christian Mertz
+ *
+ * CSCI 3033
+ * Dr. Al-Tobasei
+ * 11/30/2023
+ *
+ * DatabaseConn.java
+ * This class hosts several methods for interacting with the SQLite database.
+ *
+ */
+
 package com.hivemind;
 
 import java.io.BufferedReader;
@@ -10,25 +26,33 @@ public class DatabaseConn {
 	public static final String SUCCESS = "\033[1;92m" + "SUCCESS: " + "\033[1;90m";
 	public static final String FAILURE = "\033[1;91m" + "FAILURE: " + "\033[1;90m";
 
+	/*
+	 * DatabaseConn
+	 *
+	 * Constructor
+	 * Initialize database if it isn't already.
+	 *
+	 */
 	public DatabaseConn() {
-		//db instatiation
+		//Holder instatiation
 		Connection connection = null;
 		BufferedReader reader = null;
 		Statement statement = null;
 
 		try {
-			// attempts db connection
-			String databaseURL = "jdbc:sqlite:test.db";
+			// Attempt database connection.
+			String databaseURL = "jdbc:sqlite:test1.db";
+			// This is a local integrated database so it doesn't require a user and password.
 			connection = DriverManager.getConnection(databaseURL, "", "");
 
-			// if conn is valid, print
+			// Validate the database connection.
 			if (connection.isValid(1)) {
 				System.out.println(SUCCESS + "Connected to the SQLite database.");
 			} else {
 				System.out.println(FAILURE + "Could not connect to the SQLite database.");
 			}
 
-			// this runs the init file of commands
+			// Runs the schema initialization statements.
 			reader = new BufferedReader(new FileReader("commands.sql"));
 			connection = DriverManager.getConnection(databaseURL);
 			statement = connection.createStatement();
@@ -39,51 +63,65 @@ public class DatabaseConn {
 				statement.execute(line);
 			}
 		} catch (Exception e) {
-			System.out.println(FAILURE + e);
+			System.out.println(FAILURE + "Unable to run schema statements!");
 		} finally {
 			try {
 				if (reader != null) reader.close();
 				if (statement != null) statement.close();
 				if (connection != null) connection.close();
 			} catch (Exception e) {
-				System.out.println(FAILURE + e);
+				System.out.println(FAILURE + "Failed to close database connection!");
 			}
 		}
 	}
 
-	public boolean saveNewSocket(String dir, String clientIP, int socketPort, int timer) throws SQLException {
+	/*
+	 * saveNewSocket
+	 *
+	 * dir              	  [String]                The path to the directory for the socket.
+	 * clientIP               [String]                The client IP address for the socket.
+	 * socketPort             [int]                	  The port used for this socket.
+	 * timer                  [int]                   The timer used for this socket.
+	 *
+	 * This functions saves socket data to the database.
+	 *
+	 */
+	public void saveNewSocket(String dir, String clientIP, int socketPort, int timer) throws SQLException {
 
-		// attempts db connection
-		// not wrapping in a try/catch because the program would not run if this connection was not valid
-		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:test.db";
+		// Attempt DB connection.
+		// Not wrapping in a try/catch because the program would not run if this connection was not valid.
+		String databaseURL = "jdbc:sqlite:test1.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 
-		// query to run
+		// Statement sent to the DB
 		String query = String.format("INSERT INTO connection(dir, clientIP, socketPort, timer) VALUES (\"%s\",\"%s\",\"%s\",\"%s\");", dir, clientIP, socketPort, timer);
 
 		try {
-			//returns the outcome
-			return statement.execute(query);
+			// Attempt to send statement.
+			statement.execute(query);
 		} catch (Exception e) {
-			System.out.println(FAILURE + e);
-			return false;
+			System.out.println(FAILURE + "Unable to add socket data to the database!");
 		}
 
 	}
 
-	// pulls socket info and loads into memory
+	/*
+	 * loadExistingSockets
+	 *
+	 * Returns a ResultSet containing all the data within the database.
+	 * This is used in Main.java in order to instantiate every socket saved in the database on init.
+	 *
+	 */
 	public ResultSet loadExistingSockets() throws SQLException {
 
-		// attempts db connection
-		// not wrapping in a try/catch because the program would not run if this connection was not valid
-		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:test.db";
+		// Attempt DB connection.
+		// Not wrapping in a try/catch because the program would not run if this connection was not valid.
+		String databaseURL = "jdbc:sqlite:test1.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 
-		// Select everything
+		// Select everything in the DB
 		String query = "SELECT * FROM connection";
 
 		// This returns a ResultSetMetaData object that contains all the records
@@ -91,37 +129,34 @@ public class DatabaseConn {
 
 	}
 
-	// update socketconn
-	public boolean updateSocket(String variable, String value, int id) throws SQLException {
-		// attempts db connection
-		// not wrapping in a try/catch because the program would not run if this connection was not valid
-		// so we can only get to this point when the db is valid
-		String databaseURL = "jdbc:sqlite:test.db";
+	/*
+	 * deleteSocket
+	 *
+	 * dir              	  [String]                The path to the directory for the socket.
+	 * clientIP               [String]                The client IP address for the socket.
+	 * socketPort             [int]                	  The port used for this socket.
+	 * timer                  [int]                   The timer used for this socket.
+	 *
+	 * This function deletes a socket from the database.
+	 *
+	 */
+	public void deleteSocket(String dir, String clientIP, String socketPort, String timer) throws SQLException {
+
+		// Attempt DB connection.
+		// Not wrapping in a try/catch because the program would not run if this connection was not valid.
+		String databaseURL = "jdbc:sqlite:test1.db";
 		Connection connection = DriverManager.getConnection(databaseURL, "", "");
 		Statement statement = connection.createStatement();
 
-		// query to run
-		String query = String.format("UPDATE connection SET \"%s\" = \"%s\" WHERE id EQUALS \"%s\";", variable, value, id);
+		// Statement sent to the DB
+		String query = String.format("DELETE FROM connection WHERE dir=\"%s\" AND clientIP=\"%s\" AND socketPort=%s AND timer=%s;", dir, clientIP, socketPort, timer);
 
 		try {
-			//returns the outcome
-			return statement.execute(query);
+			// Attempt to send statement.
+			statement.execute(query);
 		} catch (Exception e) {
+			System.out.println(FAILURE + "Unable to remove socket data from the database!");
 			System.out.println(FAILURE + e);
-			return false;
 		}
 	}
-
-	/*// update watchservice
-	// this needs to save
-	public boolean updateWatch() {
-
-	}
-
-	// load watchservice in order to compare
-	// idk if this needs to return watchservice lol this is a placeholder
-	public WatchService loadWatch() {
-
-	}*/
-
 }

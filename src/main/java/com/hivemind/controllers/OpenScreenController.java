@@ -1,3 +1,19 @@
+/*
+ * Group 2
+ * Kevin Kongmanychanh
+ * Andrew Chayavon
+ * Kennedy Bowles
+ * Christian Mertz
+ *
+ * CSCI 3033
+ * Dr. Al-Tobasei
+ * 11/30/2023
+ *
+ * OpenScreenController.java
+ * Controller for openScreen.fxml
+ *
+ */
+
 package com.hivemind.controllers;
 
 import javafx.animation.FadeTransition;
@@ -5,7 +21,6 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class OpenScreenController {
@@ -20,19 +35,25 @@ public class OpenScreenController {
 
     @FXML
     protected void initialize()  {
-        welcome.setVisible(false);  //not visible
-        hiveMindLogo.setVisible(false); //not visible
-        // Slide the logo to the left over 1.7 seconds
+        // Start invisible.
+        welcome.setVisible(false);
+        // Start invisible.
+        hiveMindLogo.setVisible(false);
+        // Slide the logo to the left over 2.1 seconds
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2.1), logo);
-        translateTransition.setToX(-180); // Slide to the left by -180 pixels from center
-        translateTransition.play(); //play animation
-
+        // Slide to the left by -180 pixels from center
+        translateTransition.setToX(-180);
+        // Play animation
+        translateTransition.play();
 
         // Fade in the HiveMind text over 2.1 seconds
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2.4), hiveMindLogo);
-        fadeTransition.setFromValue(0); // Start with opacity 0
-        hiveMindLogo.setVisible(true); // visible
-        fadeTransition.setToValue(1); // End with opacity 1
+        // Start with opacity 0
+        fadeTransition.setFromValue(0);
+        // Make visible now.
+        hiveMindLogo.setVisible(true);
+        // End with opacity 1
+        fadeTransition.setToValue(1);
         fadeTransition.play();
 
         // Set onFinished event for when the logo event stops

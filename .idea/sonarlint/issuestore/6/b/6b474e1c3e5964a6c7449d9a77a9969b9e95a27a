@@ -1,5 +1,7 @@
 
-n	java:S116"RRename this field "pair_pc" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù…õÂ8†Ö¼™Á1
-r	java:S116"VRename this field "hide_window" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù…õÂ8†Ö¼™Á1
-O
-java:S1135"2Complete the task associated to this TODO comment.(…ïœ†8ˆÖ¼™Á1
+s	java:S116("RRename this field "pair_pc" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›æ‘ıüÿÿÿÿ8ıÓ¯ÅÁ1
+w	java:S116("VRename this field "hide_window" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›æ‘ıüÿÿÿÿ8ıÓ¯ÅÁ1
+X
+java:S1854-"6Remove this useless assignment to local variable "sc".(œñ÷µøÿÿÿÿ8çìÚÅÁ1
+I
+java:S1481-"'Remove this unused "sc" local variable.(œñ÷µøÿÿÿÿ8çìÚÅÁ1

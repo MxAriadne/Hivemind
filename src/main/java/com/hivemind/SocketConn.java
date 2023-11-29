@@ -1,8 +1,20 @@
-package com.hivemind;
+/*
+ * Group 2
+ * Kevin Kongmanychanh
+ * Andrew Chayavon
+ * Kennedy Bowles
+ * Christian Mertz
+ *
+ * CSCI 3033
+ * Dr. Al-Tobasei
+ * 11/30/2023
+ *
+ * SocketConn.java
+ * This is the primary class for the program. It starts the socket and WatchService for every paired connection.
+ *
+ */
 
-import com.hivemind.controllers.MainController;
-import javafx.application.Application;
-import javafx.scene.paint.Color;
+package com.hivemind;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -16,36 +28,25 @@ import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-/*
-* Object class
-* Instantiated for each connection (ie: Each object represents two endpoints)
-*
-* TODO Functions
-*  linkDest()   - This sets the child for the file directory.
-*  linkSource() - This sets the parent for the file directory.
-*  createConn() - Validates connection, also sets object to conn.
-*  load() - this might be a protected name so may need renamed. this would init the while loop to check for socket.accept()
-*
-*/
 public class SocketConn extends Main {
+    private final InetAddress clientIP;
+    // Socket for the incoming connection
     // Port for the transfer
-    private int port;
+    private final int port;
     // Directory that will be synced
-    private String directoryPath;
+    private final String directoryPath;
+    // Amount of time between directory checks
+    int timer;
+    // Number of directories being watched. This is just for debugging.
+    int count = 0;
     // Server socket
     private ServerSocket serverSocket;
     // Client IP address for authentication
-    private InetAddress clientIP;
-    // Socket for the incoming connection
     private Socket clientSocket;
     // WatchService that triggers on changes to the directory
     private WatchService watchService;
     // Authenticates subdirectories then adds them to the WatchService if valid
     private Map<WatchKey, Path> keyPathMap = new HashMap<>();
-    // Amount of time between directory checks
-    int timer;
-    // Number of directories being watched. This is just for debugging.
-    int count = 0;
 
     //Console themeing for easy diag
     public static final String GRAY = "\033[1;90m";
@@ -54,89 +55,135 @@ public class SocketConn extends Main {
     public static final String SUCCESS = GREEN + "SUCCESS: " + GRAY;
     public static final String FAILURE = RED + "FAILURE: " + GRAY;
 
-    public SocketConn(int port, int timer, String dir, InetAddress ip) {
+    /*
+     * SocketConn
+     *
+     * Constructor
+     * Initialize the ip, port, directory, and timer.
+     * Starts a new thread for the socket and starts the watch service via the registerWatchService() function.
+     *
+     */
+    public SocketConn(int socketPort, int watchTimer, String socketDir, InetAddress ip) {
         this.clientIP = ip;
-        this.directoryPath = dir;
-        this.port = port;
-        this.timer = timer;
-
-        //LogWindow.appendToLog("Message from AnotherClass");
+        this.directoryPath = socketDir;
+        this.port = socketPort;
+        this.timer = watchTimer;
 
         new Thread(() -> {
             try {
+                // Prints debugging information.
                 System.out.println(GREEN + "-------------------------------------");
                 System.out.println(GRAY + "Attempting to start socket:" + "\n" +
                                           "IP: " + clientIP + "\n" +
                                           "Port: " + port + "\n" +
                                           "Directory: " + directoryPath);
                 System.out.println(GREEN + "-------------------------------------");
+                // Establish a connection for the given port.
                 serverSocket = new ServerSocket(port);
-                registerWatchService(directoryPath);
+                // Register the directory with the WatchService
+                registerWatchService(Paths.get(directoryPath));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(FAILURE + "Port or directory is invalid!");
             }
+        // Launch the thread.
         }).start();
     }
 
+    /*
+     * registerAll
+     *
+     * start                [Path]                The path to the directory that'll be synced.
+     *
+     * This function recursively adds folders to the WatchService.
+     * It's called everytime a new directory is created as well.
+     *
+     */
     private void registerAll(final Path start) throws IOException {
+        // Uses walkFileTree to traverse the directory
         Files.walkFileTree(start, new SimpleFileVisitor<>() {
+            // Overrides preVisitDirectory in order to call our custom register function for
+            // each path discovered.
 			@Override
 			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                // Adds the directory to the WatchService.
 				register(dir);
+                // Increases the count of directories in the WatchService.
                 count++;
+                // Proceed to next dir
 				return FileVisitResult.CONTINUE;
 			}
 		});
         System.out.println(SUCCESS + count + " directories have been registered with the watch service!");
     }
 
+    /*
+     * register
+     *
+     * dir              [Path]                The directory to be added to the WatchService.
+     *
+     * Registers the path with the WatchService for modification, creation, and deletion events.
+     * It then adds the path to the keyPathMap HashMap so that we don't traverse paths we've already been to.
+     *
+     */
     private void register(Path dir) throws IOException {
         // Register the directory to fire events for modification, creation, and deletion of items.
         WatchKey key = dir.register(watchService, ENTRY_MODIFY, ENTRY_CREATE, ENTRY_DELETE);
         // Save this to the keypath to track.
         keyPathMap.put(key, dir);
-        // After execution, print to console the outcome.
-        //System.out.println(SUCCESS + "A new directory ( " + dir + " ) was registered!");
     }
 
-    private void registerWatchService(String directoryPath) throws IOException {
-        Path path = Paths.get(directoryPath);
+    /*
+     * registerWatchService
+     *
+     * dir              [Path]              The path to the directory that'll be synced.
+     *
+     * Creates the WatchService for the directory and triggers the send methods on WatchService events.
+     *
+     */
+    private void registerWatchService(Path dir) throws IOException {
+        // Initialize the WatchService
         this.watchService = FileSystems.getDefault().newWatchService();
-        registerAll(path);
-
+        // Recursively register the subfolders
+        registerAll(dir);
+        // Create the thread for reading WatchService events.
         new Thread(() -> {
             try {
+                // Constant while loop
                 while (true) {
+                    // Read the WatchService
                     WatchKey key = watchService.take();
-
+                    // Parse through the events
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        if (event.kind() == ENTRY_MODIFY ||
-                                event.kind() == ENTRY_CREATE) {
+                        // If something had been modified or created in the directory...
+                        if (event.kind() == ENTRY_MODIFY || event.kind() == ENTRY_CREATE) {
+                            // Get the name of the modified item.
+                            Path filename = (Path) event.context();
+                            // Get the path of the modified item.
+                            Path filePath = dir.resolve(filename);
+                            // If the item is a directory...
+                            if (Files.isDirectory(filePath)) {
+                                // Register the new directory with the WatchService
+                                registerAll(filePath);
+                                System.out.println(SUCCESS + " Registered " + filePath + "with the WatchService!");
 
-                            Path modifiedFile = (Path) event.context();
-                            String fullFilePath = path.resolve(modifiedFile).toString();
-
-                            if (Files.isDirectory(Path.of(fullFilePath))) {
-                                registerAll(Path.of(fullFilePath));
-
-                                System.out.println(": " + fullFilePath);
-
+                                // Wait for the client to attempt a connection.
                                 clientSocket = serverSocket.accept();
+                                // Verify that the client is the one we've paired with.
                                 if (clientIP.equals(clientSocket.getInetAddress())) {
-                                    sendDirectoryCreateRequest(modifiedFile.toString());
-                                    System.out.println(SUCCESS + "Directory \"" + modifiedFile.getFileName() + "\" was sent to " + clientIP + "!");
+                                    // If so, send the information.
+                                    sendDirectoryCreateRequest(filename);
                                 } else {
+                                    // If not, error!
                                     System.out.println(FAILURE + "Non-paired computer attempted connection!");
                                 }
-
+                            // If the item is actually a file...
                             } else {
-                                System.out.println("File modified: " + fullFilePath);
-                                System.out.println("File name: " + modifiedFile.getFileName());
-
+                                // Verify that the client is the one we've paired with.
                                 if (clientIP.equals(clientSocket.getInetAddress())) {
-                                    sendFile(fullFilePath);
-                                    System.out.println(SUCCESS + "File \"" + modifiedFile.getFileName() + "\" was sent to " + clientIP + "!");
+                                    // If so, send the information.
+                                    sendFile(filePath);
                                 } else {
+                                    // If not, error!
                                     System.out.println(FAILURE + "Non-paired computer attempted connection!");
                                 }
                             }
@@ -144,14 +191,14 @@ public class SocketConn extends Main {
                         }
                         // If a file was deleted...
                         if (event.kind() == ENTRY_DELETE) {
-                            Path modifiedFile = (Path) event.context();
-                            String fullFilePath = path.resolve(modifiedFile).toString();
-
-                            System.out.println("File deleted: " + fullFilePath);
-
+                            // Get the name of the modified item.
+                            Path filename = (Path) event.context();
+                            // Get the path of the modified item.
+                            Path filePath = dir.resolve(filename);
+                            // Wait for the client to attempt a connection.
                             clientSocket = serverSocket.accept();
-                            sendDeleteRequest(fullFilePath);
-
+                            // Send the client the deletion request.
+                            sendDeleteRequest(filePath);
                         }
                     }
 
@@ -164,39 +211,41 @@ public class SocketConn extends Main {
                     }
                 }
             } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
+                System.out.println(FAILURE + "Either the thread closed early or the WatchService events resulted in an error!");
             }
-        }).start();
+        // Start thread
+		}).start();
     }
 
-    private void sendDeleteRequest(String fullFilePath) throws IOException {
-        File file = new File(fullFilePath);
+    /*
+     * sendFile
+     * fullFilePath             [Path]                Path to the file that will be created.
+     *
+     * The client reads three kinds of event flags.
+     * Flag '0' means creation event.
+     * Flag '1' means deletion event.
+     * Flag '2' means directory creation event.
+     *
+     * This function sends the creation flag as well as the name of the item to be created.
+     *
+     */
+    private void sendFile(Path fullFilePath) throws IOException {
+        // File instatiation
+        File file = new File(String.valueOf(fullFilePath));
+        // Filename to be sent to client
         String filename = file.getName();
-
-        OutputStream outputStream = clientSocket.getOutputStream();
-
-        // Send the deletion flag
-        outputStream.write(1);
-
-        // Send the file name
-        byte[] fileNameBytes = filename.getBytes(StandardCharsets.UTF_8);
-        outputStream.write(fileNameBytes.length);
-        outputStream.write(fileNameBytes);
-    }
-
-    private void sendFile(String fullFilePath) throws IOException {
-        File file = new File(fullFilePath);
-        String filename = file.getName();
-
+        // Connect to the client write sream
         try (InputStream fileInputStream = new FileInputStream(file);
              OutputStream outputStream = clientSocket.getOutputStream()) {
 
-            // Send the deletion flag (no deletion)
+            // Send the file creation flag '0'
             outputStream.write(0);
 
-            // Send the file name first
+            // Sending the filename so the client knows how to save the file.
             byte[] fileNameBytes = filename.getBytes(StandardCharsets.UTF_8);
+            // Send filename array length.
             outputStream.write(fileNameBytes.length);
+            // Send filename array data.
             outputStream.write(fileNameBytes);
 
             // Send file content
@@ -207,26 +256,80 @@ public class SocketConn extends Main {
                 outputStream.write(buffer, 0, bytesRead);
             }
 
-            System.out.println("File '" + filename + "' sent to client.");
+            System.out.println(SUCCESS + "File \"" + filename + "\" was sent to " + clientIP + "!");
         } finally {
-            clientSocket.close(); // Ensure socket closure after sending file
+            // Ensure socket closure after sending file
+            clientSocket.close();
         }
     }
 
-    private void sendDirectoryCreateRequest(String directoryPath) {
-        try (OutputStream outputStream = clientSocket.getOutputStream()) {
+    /*
+     * sendDeleteRequest
+     * fullFilePath             [Path]                Path to the file that will be deleted.
+     *
+     * The client reads three kinds of event flags.
+     * Flag '0' means creation event.
+     * Flag '1' means deletion event.
+     * Flag '2' means directory creation event.
+     *
+     * This function sends the deletion flag as well as the name of the item to be deleted.
+     *
+     */
+    private void sendDeleteRequest(Path fullFilePath) throws IOException {
+        // File instatiation
+        File file = new File(String.valueOf(fullFilePath));
+        String filename = file.getName();
 
+        try {
+            OutputStream outputStream = clientSocket.getOutputStream();
+
+            // Send the deletion flag
+            outputStream.write(1);
+
+            // Sending the filename so the client knows how to save the file.
+            byte[] fileNameBytes = filename.getBytes(StandardCharsets.UTF_8);
+            // Send filename array length.
+            outputStream.write(fileNameBytes.length);
+            // Send filename array data.
+            outputStream.write(fileNameBytes);
+
+            System.out.println(SUCCESS + "File deletion request was sent for \"" + filename + "\" to the client! IP: " + clientIP);
+        } finally {
+            // Ensure socket closure after sending file
+            clientSocket.close();
+        }
+    }
+
+    /*
+     * sendDirectoryCreateRequest
+     * fullFilePath             [Path]                Path to the directory to be created.
+     *
+     * The client reads three kinds of event flags.
+     * Flag '0' means creation event.
+     * Flag '1' means deletion event.
+     * Flag '2' means directory creation event.
+     *
+     * This function sends the directory creation flag as well as the name of the directory to be created.
+     *
+     */
+    private void sendDirectoryCreateRequest(Path fullFilePath) throws IOException {
+        try (OutputStream outputStream = clientSocket.getOutputStream()) {
             // Send the directory creation flag
             outputStream.write(2);
 
-            // Send the directory path
-            byte[] directoryPathBytes = directoryPath.getBytes(StandardCharsets.UTF_8);
+            // Sending the directory name so the client knows how to save the file.
+            byte[] directoryPathBytes = fullFilePath.toString().getBytes(StandardCharsets.UTF_8);
+            // Send directory name array length.
             outputStream.write(directoryPathBytes.length);
+            // Send directory name array data.
             outputStream.write(directoryPathBytes);
 
-            System.out.println("Directory creation request sent for: " + directoryPath);
+            System.out.println(SUCCESS + "Directory \"" + fullFilePath.getFileName() + "\" was sent to " + clientIP + "!");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(FAILURE + "Directory \"" + fullFilePath.getFileName() + "\" failed to send!");
+        } finally {
+            // Ensure socket closure after sending file
+            clientSocket.close();
         }
     }
 }

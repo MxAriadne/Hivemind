@@ -14,14 +14,15 @@
       <Insets />
    </opaqueInsets>
    <Label layoutX="115.0" layoutY="209.0" />
-   <ImageView fitHeight="192.0" fitWidth="209.0" layoutX="204.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@hivemindTemp.png" />
+   <ImageView fitHeight="192.0" fitWidth="209.0" layoutX="204.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@hivemind.png" />
    </ImageView>
-   <Button fx:id="pair_pc" layoutX="257.0" layoutY="279.0" onAction="#handleButtonClick" prefWidth="88.0" text="Pair Local PC" textFill="#dfbb0a" style="-fx-background-color: black;"/>
-   <Button fx:id="hide_window" layoutX="256.0" layoutY="318.0" onAction="#handleButtonClick" text="Hide Window" textFill="#dfbb0a" style="-fx-background-color: black;" />
-   <Text layoutX="236.0" layoutY="249.0" stroke="#dfbb0a" strokeLineJoin="ROUND" strokeType="OUTSIDE" text="Hivemind" textAlignment="CENTER" wrappingWidth="128.775390625">
+   <Button fx:id="pair_pc" layoutX="257.0" layoutY="260.0" onAction="#handleButtonClick" prefWidth="88.0" style="-fx-background-color: black;" text="Pair Local PC" textFill="#dfbb0a" />
+   <Button fx:id="listBtn" layoutX="255.0" layoutY="296.0" onAction="#handleButtonClick" style="-fx-background-color: black;" text="List Paired PCs" textFill="#dfbb0a" />
+   <Text layoutX="236.0" layoutY="230.0" stroke="#dfbb0a" strokeLineJoin="ROUND" strokeType="OUTSIDE" text="Hivemind" textAlignment="CENTER" wrappingWidth="128.775390625">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
    </Text>
+   <Button fx:id="hide_window" layoutX="257.0" layoutY="333.0" style="-fx-background-color: black;" text="Hide Window" textFill="#dfbb0a" />
 </Pane>
