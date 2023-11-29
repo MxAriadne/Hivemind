@@ -1,5 +1,6 @@
 /*
  * Group 2
+ * Freyja Richardson
  * Kevin Kongmanychanh
  * Andrew Chayavon
  * Kennedy Bowles
@@ -27,10 +28,8 @@ import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;

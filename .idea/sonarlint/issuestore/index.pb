@@ -30,8 +30,6 @@ $src/main/java/com/hivemind/Main.java,2\5\25a69e76fefe2a3bfe0109ceb64d783301809
 commands.sql,9\7\9756c514a02f4f744c2d90b761348d3c3c72926c
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-7
-test.db,f\9\f969b29ca0626c75276dfa7e222b141095d7f45b
 j
 :src/main/java/com/hivemind/controllers/ListController.java,8\8\887b40bdcff47bf8353901482c1c4848b7786db3
 8

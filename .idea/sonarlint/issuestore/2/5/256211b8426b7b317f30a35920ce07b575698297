@@ -1,31 +1,31 @@
 
 w
-java:S1192,"UDefine a constant instead of duplicating this literal "jdbc:sqlite:test1.db" 4 times.(ˆ´êÏûÿÿÿÿ8Ù˜ÌÇÁ1
+java:S1192-"UDefine a constant instead of duplicating this literal "jdbc:sqlite:test1.db" 4 times.(ˆ´êÏûÿÿÿÿ8Ù˜ÌÇÁ1
 j
-java:S2095•"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
+java:S2095_"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
+i
+java:S2095`"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
+j
+java:S2095z"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
+i
+java:S2095{"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
 k
-java:S2095”"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
+java:S2095•"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
 j
-java:S2095^"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
+java:S2095/"HUse try-with-resources or close this "Connection" in a "finally" clause.(÷ž†èùÿÿÿÿ8Ö« ÅÁ1
+j
+java:S2095–"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
+i
+java:S2095;"GUse try-with-resources or close this "Statement" in a "finally" clause.(‡²€·ýÿÿÿÿ8Ö« ÅÁ1
 d
-java:S20959"HUse try-with-resources or close this "Connection" in a "finally" clause.(ûÓô8Ö« ÅÁ1
-i
-java:S2095:"GUse try-with-resources or close this "Statement" in a "finally" clause.(‡²€·ýÿÿÿÿ8Ö« ÅÁ1
-i
-java:S2095_"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
-j
-java:S2095."HUse try-with-resources or close this "Connection" in a "finally" clause.(÷ž†èùÿÿÿÿ8Ö« ÅÁ1
-j
-java:S2095y"HUse try-with-resources or close this "Connection" in a "finally" clause.( »Ýáþÿÿÿÿ8Ö« ÅÁ1
-i
-java:S2095z"GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµþÿÿÿÿ8Ö« ÅÁ1
+java:S2095:"HUse try-with-resources or close this "Connection" in a "finally" clause.(ûÓô8Ö« ÅÁ1
 K
-java:S2115.")Add password protection to this database.(÷ž†èùÿÿÿÿ8Ù« ÅÁ1
+java:S2115/")Add password protection to this database.(÷ž†èùÿÿÿÿ8Ù« ÅÁ1
 L
-java:S2093*"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8Ü« ÅÁ1
+java:S2093+"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8Ü« ÅÁ1
 K
-java:S2115^")Add password protection to this database.( »Ýáþÿÿÿÿ8Ý« ÅÁ1
+java:S2115_")Add password protection to this database.( »Ýáþÿÿÿÿ8Ý« ÅÁ1
 K
-java:S2115y")Add password protection to this database.( »Ýáþÿÿÿÿ8Þ« ÅÁ1
+java:S2115z")Add password protection to this database.( »Ýáþÿÿÿÿ8Þ« ÅÁ1
 L
-java:S2115”")Add password protection to this database.( »Ýáþÿÿÿÿ8Þ« ÅÁ1
+java:S2115•")Add password protection to this database.( »Ýáþÿÿÿÿ8Þ« ÅÁ1

@@ -1,5 +1,6 @@
 /*
  * Group 2
+ * Freyja Richardson
  * Kevin Kongmanychanh
  * Andrew Chayavon
  * Kennedy Bowles

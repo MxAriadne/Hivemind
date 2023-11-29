@@ -1,11 +1,26 @@
+/*
+ * Group 2
+ * Freyja Richardson
+ * Kevin Kongmanychanh
+ * Andrew Chayavon
+ * Kennedy Bowles
+ * Christian Mertz
+ *
+ * CSCI 3033
+ * Dr. Al-Tobasei
+ * 11/30/2023
+ *
+ * ListController.java
+ * Controller for list.fxml
+ *
+ */
+
 package com.hivemind.controllers;
 
 import com.hivemind.DatabaseConn;
 import com.hivemind.SceneController;
-import com.hivemind.SocketConn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -19,8 +34,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -41,9 +54,11 @@ public class ListController {
 
 	@FXML
 	protected void initialize() {
+		// Disables the horizontal scrollbar
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		// Makes it dynamically grow with the elements added.
 		sp.setMaxHeight(Double.MAX_VALUE);
-
+		// This adds the sockets to the list.
 		loadSockets(sp);
 	}
 
@@ -63,16 +78,18 @@ public class ListController {
 	 *
 	 * This method takes no input parameters.
 	 * Loads the paired sockets from the database into memory.
-	 * It then creates SocketConn objects for each socket.
-	 * This starts the file syncing process.
+	 * It then iterates over them and adds them to the ScrollPane for displaying.
 	 *
 	 */
 	public static void loadSockets(ScrollPane sp) {
 		// Define VBox for connections in the Scrollpane
 		VBox content = new VBox();
+		// Set background color
 		content.setStyle("-fx-background-color : #6E476A;");
 		content.setSpacing(10);
+		// Set width to equal the ScrollPane that the Vbox will be inside of.
 		content.prefWidthProperty().bind(sp.widthProperty());
+		// Set height to equal the ScrollPane that the Vbox will be inside of.
 		content.prefHeightProperty().bind(sp.heightProperty());
 		// Initialize database helper file.
 		DatabaseConn db = new DatabaseConn();
@@ -93,31 +110,38 @@ public class ListController {
 				String clientIP = rs.getString("clientIP");
 				// Open port for connection
 				int port = rs.getInt("socketPort");
+				// Button containing connection info
 				Button btn = new Button("Directory: " + dir + "\n" +
 						                   "IP: " + clientIP + "\t\tPort: " + port);
+				// Set text color
 				btn.setTextFill(Paint.valueOf("dfbb0a"));
+				// Set background color
 				btn.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 				btn.setTextAlignment(TextAlignment.CENTER);
 				btn.setFont(Font.font(14));
+				// Make the button take up the full width of the menu
 				btn.setMaxWidth(Double.MAX_VALUE);
-
+				// Give every button an event handler that deletes the socket.
 				btn.setOnAction(e -> {
 					try {
+						// Delete socket selected
 						db.deleteSocket(dir, clientIP, socketPort, timer);
+						// Reload
 						loadSockets(sp);
 					} catch (SQLException ex) {
 						System.out.println(FAILURE + "Failed to delete socket!");
 					}
 				});
-
+				// Add the button to the Vbox.
 				content.getChildren().add(btn);
 			}
+			// Set background color
 			sp.setStyle("-fx-background-color: black;");
+			// Add Vbox to ScrollPane
 			sp.setContent(content);
 		} catch (SQLException e) {
 			// Only triggers if the ResultSet is null.
 			System.out.println(FAILURE + "Database is empty or inaccessible!");
 		}
 	}
-
 }
